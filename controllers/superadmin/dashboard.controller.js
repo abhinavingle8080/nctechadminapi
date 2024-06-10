@@ -9,7 +9,6 @@ const dashboard = async (req, res) => {
   const userId = req.user?.user_id;
   const today = moment().startOf("day");
   const todayMonthDay = moment().format('MM-DD');
-  console.log('today', today.toDate());
   try {
     const EmployeeCount = await User.count({
       where: {
