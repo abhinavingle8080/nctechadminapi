@@ -3,30 +3,23 @@ const { User, Employee, Holiday, Leave } = require("../../models");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const Sequelize = require("sequelize");
-const constants = require("../../config/constants");
 
 const dashboard = async (req, res) => {
-  const userId = req.user?.user_id;
+  const userId = req.user.id;
+  console.log('userId', userId)
   const today = moment().startOf("day");
-  const todayMonthDay = moment().format('MM-DD');
-  console.log('today', today.toDate());
   try {
     const EmployeeCount = await User.count({
       where: {
         role_id: 2,
       },
     });
-
     const pendingLeaveCount = await Leave.count({
       where: {
         status: "Pending",
-        employee_id: {
-          [Op.in]: Sequelize.literal(`(SELECT id FROM users WHERE role_id = ${constants.ROLES.EMPLOYEE} AND deleted_at IS NULL)`),
-        },
+        employee_id : userId
       },
     });
-    
-    
 
     const currentDate = new Date();
     const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
@@ -70,7 +63,7 @@ const dashboard = async (req, res) => {
     
       return userWithAge;
     });
-
+    
     res.status(200).json({
       statusCode: 200,
       message: "Dashboard data fetched successfully",

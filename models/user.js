@@ -61,6 +61,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      designation_id: {
+        type: DataTypes.INTEGER,
+        references: { model: "designations", key: "id" },
+        allowNull: false,
+      },
       status : {
         type: DataTypes.ENUM("Active", "Inactive"),
         allowNull: false,
@@ -112,6 +117,12 @@ module.exports = (sequelize, DataTypes) => {
       as: "Role",
       onDelete: "CASCADE",
     });
+
+    User.belongsTo(models.Designation, {
+      foreignKey: "designation_id",
+      as: "Designation",
+      onDelete: "CASCADE",
+    })
   }
 
   return User;
