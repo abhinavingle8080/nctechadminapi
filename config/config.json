@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "nctech_admin",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "nctech_admin",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "nctech_admin",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "app_secret_key": "BBBBHphQTwvSgVoBxfKhoj5PJexrkWi3sJfBzQdybAsdfIksSV2GIZWO5N3L6k3DFCq5X"
+}
