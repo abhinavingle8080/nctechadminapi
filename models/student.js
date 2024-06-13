@@ -4,7 +4,11 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class Student extends Model {
     static associate(models) {
-      // Define associations here if needed
+      // Define associations here
+      Student.hasMany(models.Payment, {
+        foreignKey: 'student_id',
+        as: 'payments', // Alias to be used when querying
+      });
     }
   }
 
@@ -68,12 +72,12 @@ module.exports = (sequelize) => {
       status: {
         type: DataTypes.ENUM('Active', 'Inactive'),
         allowNull: false,
-        defaultValue: 'Active', // Default value can be specified
+        defaultValue: 'Active',
       },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Default value as current timestamp
+        defaultValue: DataTypes.NOW,
       },
       updated_at: {
         type: DataTypes.DATE,
@@ -87,10 +91,10 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Student',
-      tableName: 'students', // Specify the table name explicitly
-      underscored: true, // Use underscored naming convention for fields
-      timestamps: true, // Enable timestamps (created_at, updated_at)
-      paranoid: true, // Enable soft deletes (deleted_at)
+      tableName: 'students',
+      underscored: true,
+      timestamps: true,
+      paranoid: true,
     }
   );
 
