@@ -44,7 +44,7 @@ module.exports = {
         allowNull: false,
       },
       payment_status: {
-        type: Sequelize.ENUM('Active', 'Inactive'),
+        type: Sequelize.ENUM('Completed', 'Pending', 'Failed'),
         allowNull: false,
       },
       payment_confirmation_number: {

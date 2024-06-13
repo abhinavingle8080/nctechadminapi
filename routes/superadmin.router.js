@@ -13,6 +13,7 @@ const profileController = require('../controllers/superadmin/profile.controller'
 const noticeController = require('../controllers/superadmin/notice.controller');
 const designationController = require('../controllers/superadmin/designation.controller');
 const teamController = require('../controllers/superadmin/team.controller');
+const paymentController = require('../controllers/superadmin/payment.controller');
 
 
 router.post('/login', AuthController.login);
@@ -59,5 +60,12 @@ router.post('/create-team', passport.authenticate('jwt', { session: false }), te
 router.post('/get-team', passport.authenticate('jwt', { session: false }), teamController.getTeam);
 router.post('/update-team', passport.authenticate('jwt', { session: false }), teamController.updateTeam);
 router.post('/delete-team', passport.authenticate('jwt', { session: false }), teamController.deleteTeam);
+
+router.post('/get-payments', passport.authenticate('jwt', { session: false }), paymentController.getAllPayments);
+router.post('/create-payment', passport.authenticate('jwt', { session: false }), paymentController.createPayment);
+router.post('/get-payment', passport.authenticate('jwt', { session: false }), paymentController.getPayment);
+router.post('/update-payment', passport.authenticate('jwt', { session: false }), paymentController.updatePayment);
+router.post('/delete-payment', passport.authenticate('jwt', { session: false }), paymentController.deletePayment);
+
 
 module.exports = router;
