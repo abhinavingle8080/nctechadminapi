@@ -15,12 +15,11 @@ const getAllPayments = async (req, res) => {
         "student_id",
         "course_id",
         "payment_method",
-        "transaction_id",
         "paid_amount",
         "due_amount",
         "payment_date",
         "payment_status",
-        "payment_confirmation_number",
+        "invoice_number",
         "created_by",
         "updated_by",
         "created_at",
@@ -44,7 +43,6 @@ const getAllPayments = async (req, res) => {
       order: [["id", "ASC"]],
       where: {
         [Op.or]: [
-          { transaction_id: { [Op.like]: `%${search}%` } },
           { payment_status: { [Op.like]: `%${search}%` } },
         ],
       },
@@ -67,29 +65,16 @@ const getAllPayments = async (req, res) => {
 const createPayment = async (req, res) => {
   try {
     const body = req.body;
-    const existingPayment = await Payment.findOne({
-      where: {
-        transaction_id: body.transaction_id,
-      },
-    });
-
-    if (existingPayment) {
-      return res.status(constants.STATUS_CODES.VALIDATION).json({
-        statusCode: constants.STATUS_CODES.VALIDATION,
-        message: "Transaction ID already exists",
-      });
-    }
 
     const payment_data = await Payment.create({
       student_id: body.student_id,
       course_id: body.course_id,
       payment_method: body.payment_method,
-      transaction_id: body.transaction_id,
       paid_amount: body.paid_amount,
       due_amount: body.due_amount,
       payment_date: body.payment_date,
       payment_status: body.payment_status,
-      payment_confirmation_number: body.payment_confirmation_number,
+      invoice_number: body.invoice_number,
       created_by: body.created_by,
       updated_by: body.updated_by,
       created_at: new Date(),
@@ -126,12 +111,11 @@ const getPayment = async (req, res) => {
         "student_id",
         "course_id",
         "payment_method",
-        "transaction_id",
         "paid_amount",
         "due_amount",
         "payment_date",
         "payment_status",
-        "payment_confirmation_number",
+        "invoice_number",
         "created_by",
         "updated_by",
         "created_at",
@@ -180,12 +164,11 @@ const updatePayment = async (req, res) => {
       student_id,
       course_id,
       payment_method,
-      transaction_id,
       paid_amount,
       due_amount,
       payment_date,
       payment_status,
-      payment_confirmation_number,
+      invoice_number,
       created_by,
       updated_by,
     } = req.body;
@@ -211,12 +194,11 @@ const updatePayment = async (req, res) => {
         student_id,
         course_id,
         payment_method,
-        transaction_id,
         paid_amount,
         due_amount,
         payment_date,
         payment_status,
-        payment_confirmation_number,
+        invoice_number,
         created_by,
         updated_by,
         updated_at: new Date(),

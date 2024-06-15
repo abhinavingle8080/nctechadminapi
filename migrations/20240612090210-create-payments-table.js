@@ -25,12 +25,8 @@ module.exports = {
         },
       },
       payment_method: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.ENUM('Online', 'Cash', 'Cheque'),
         allowNull: false,
-      },
-      transaction_id: {
-        type: Sequelize.STRING(100),
-        unique: true,
       },
       paid_amount: {
         type: Sequelize.DECIMAL(10, 2),
@@ -47,7 +43,7 @@ module.exports = {
         type: Sequelize.ENUM('Completed', 'Pending', 'Failed'),
         allowNull: false,
       },
-      payment_confirmation_number: {
+      invoice_number: {
         type: Sequelize.STRING(50),
       },
       created_by: {
