@@ -21,7 +21,22 @@ const createCourse = async (req, res) => {
 
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.findAll();
+    const body = req.body;
+    const courses = await Course.findAndCountAll({
+      offset: (parseInt(body.page) - 1) * parseInt(body.limit),
+      limit: parseInt(body.limit),
+      order: [["id", "ASC"]],
+      attributes : [
+        "id",
+        "course_name",
+        "description",
+        "fees",
+        "discount_fees",
+        "duration",
+        "start_date",
+        "end_date",
+      ]
+    });
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: 'Courses retrieved successfully',
