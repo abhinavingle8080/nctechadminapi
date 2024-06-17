@@ -35,7 +35,7 @@ const getAllPayments = async (req, res) => {
         {
           model: Course,
           as: "Course",
-          attributes: ["id", "course_name"],
+          attributes: ["id", "course_name","fees","discount_fees"],
         },
       ],
       offset: offset,
@@ -131,7 +131,7 @@ const getPayment = async (req, res) => {
         {
           model: Course,
           as: "Course",
-          attributes: ["id", "course_name"],
+          attributes: ["id", "course_name","fees","discount_fees"],
         },
       ],
       where: { id: payment_id },
