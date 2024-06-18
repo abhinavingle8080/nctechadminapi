@@ -40,14 +40,14 @@ module.exports = (sequelize) => {
       },
       paid_amount: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+        allowNull: true,
       },
       due_amount: {
         type: DataTypes.DECIMAL(10, 2),
       },
       payment_date: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
       },
       payment_status: {
         type: DataTypes.ENUM('Completed', 'Pending', 'Failed'),
