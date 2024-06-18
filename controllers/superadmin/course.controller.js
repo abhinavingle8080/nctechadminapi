@@ -28,6 +28,7 @@ const getAllCourses = async (req, res) => {
       order: [["id", "ASC"]],
       attributes : [
         "id",
+        "status",
         "course_name",
         "description",
         "fees",
@@ -54,8 +55,12 @@ const getAllCourses = async (req, res) => {
 
 const getCourseById = async (req, res) => {
   try {
-    const { id } = req.body;
-    const course = await Course.findByPk(id);
+    const { course_id } = req.body;
+    const course = await Course.findOne({
+      where :{
+        id :course_id
+      }
+    });
     if (course) {
       res.status(constants.STATUS_CODES.SUCCESS).json({
         statusCode: constants.STATUS_CODES.SUCCESS,
@@ -80,59 +85,90 @@ const getCourseById = async (req, res) => {
 
 const updateCourse = async (req, res) => {
   try {
-    const { id } = req.body;
-    const [updated] = await Course.update(req.body, {
-      where: { id }
-    });
-    if (updated) {
-      const updatedCourse = await Course.findByPk(id);
-      res.status(constants.STATUS_CODES.SUCCESS).json({
-        statusCode: constants.STATUS_CODES.SUCCESS,
-        message: 'Course updated successfully',
-        data: updatedCourse
-      });
-    } else {
-      res.status(constants.STATUS_CODES.NOT_FOUND).json({
-        statusCode: constants.STATUS_CODES.NOT_FOUND,
-        message: 'Course not found'
+    const { course_id, ...updates } = req.body;
+
+    if (!course_id) {
+      return res.status(constants.STATUS_CODES.BAD_REQUEST).json({
+        statusCode: constants.STATUS_CODES.BAD_REQUEST,
+        message: 'Course ID is required',
       });
     }
+
+    // Fetch the course to update
+    let course = await Course.findByPk(course_id);
+
+    if (!course) {
+      return res.status(constants.STATUS_CODES.NOT_FOUND).json({
+        statusCode: constants.STATUS_CODES.NOT_FOUND,
+        message: 'Course not found',
+      });
+    }
+
+    // Log current course details for debugging
+    console.log('Current Course Details:', course.toJSON());
+
+    // Perform updates on the course object
+    await course.update({
+      ...updates, // Update all fields based on req.body
+      updated_at: new Date(), // Ensure updated_at is updated
+    });
+
+    // Log updated course details for debugging
+    console.log('Updated Course Details:', course.toJSON());
+
+    res.status(constants.STATUS_CODES.SUCCESS).json({
+      statusCode: constants.STATUS_CODES.SUCCESS,
+      message: 'Course updated successfully',
+      data: course, // Optionally return the updated course data
+    });
   } catch (error) {
     console.error('Error updating course:', error);
     res.status(constants.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
       statusCode: constants.STATUS_CODES.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',
-      error: error.message
+      error: error.message,
     });
   }
 };
 
+
 const deleteCourse = async (req, res) => {
   try {
-    const { id } = req.body;
-    const deleted = await Course.destroy({
-      where: { id }
-    });
-    if (deleted) {
-      res.status(constants.STATUS_CODES.SUCCESS).json({
-        statusCode: constants.STATUS_CODES.SUCCESS,
-        message: 'Course deleted successfully'
-      });
-    } else {
-      res.status(constants.STATUS_CODES.NOT_FOUND).json({
-        statusCode: constants.STATUS_CODES.NOT_FOUND,
-        message: 'Course not found'
+    const { course_id } = req.body;
+
+    if (!course_id) {
+      return res.status(constants.STATUS_CODES.BAD_REQUEST).json({
+        statusCode: constants.STATUS_CODES.BAD_REQUEST,
+        message: 'Course ID is required',
       });
     }
+
+    const course = await Course.findByPk(course_id);
+
+    if (!course) {
+      return res.status(constants.STATUS_CODES.NOT_FOUND).json({
+        statusCode: constants.STATUS_CODES.NOT_FOUND,
+        message: 'Course not found',
+      });
+    }
+
+    await course.destroy();
+
+    res.status(constants.STATUS_CODES.SUCCESS).json({
+      statusCode: constants.STATUS_CODES.SUCCESS,
+      message: 'Course deleted successfully',
+    });
   } catch (error) {
     console.error('Error deleting course:', error);
     res.status(constants.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
       statusCode: constants.STATUS_CODES.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',
-      error: error.message
+      error: error.message,
     });
   }
 };
+
+
 
 module.exports = {
   createCourse,
