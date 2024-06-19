@@ -3,6 +3,41 @@ const constants = require("../../config/constants");
 const { Op } = require("sequelize");
 const app = require("../../services/app.service");
 const config = require("../../config/app.json")[app["env"]];
+const { generateInvoiceNumber } = require("../../helpers/common.helper");
+
+const getPaymentById = async (payment_id) => {
+  return await Payment.findOne({
+    attributes: [
+      "id",
+      "student_id",
+      "course_id",
+      "payment_method",
+      "paid_amount",
+      "due_amount",
+      "payment_date",
+      "payment_status",
+      "invoice_number",
+      "created_by",
+      "updated_by",
+      "created_at",
+      "updated_at",
+      "deleted_at",
+    ],
+    include: [
+      {
+        model: Student,
+        as: "Student",
+        attributes: ["id", "first_name", "last_name", "email"],
+      },
+      {
+        model: Course,
+        as: "Course",
+        attributes: ["id", "course_name", "fees", "discount_fees"],
+      },
+    ],
+    where: { id: payment_id },
+  });
+};
 
 const getAllPayments = async (req, res) => {
   try {
@@ -35,7 +70,7 @@ const getAllPayments = async (req, res) => {
         {
           model: Course,
           as: "Course",
-          attributes: ["id", "course_name","fees","discount_fees"],
+          attributes: ["id", "course_name", "fees", "discount_fees"],
         },
       ],
       offset: offset,
@@ -64,19 +99,31 @@ const getAllPayments = async (req, res) => {
 
 const createPayment = async (req, res) => {
   try {
-    const body = req.body;
+    const {
+      student_id,
+      course_id,
+      payment_method,
+      paid_amount,
+      due_amount,
+      payment_status,
+      created_by,
+      updated_by,
+    } = req.body;
 
+    const payment_date = req.body.payment_date || new Date(); // Use current date if not provided
+    const invoice = await generateInvoiceNumber();
+    console.log('invoice', invoice);
     const payment_data = await Payment.create({
-      student_id: body.student_id,
-      course_id: body.course_id,
-      payment_method: body.payment_method,
-      paid_amount: body.paid_amount,
-      due_amount: body.due_amount,
-      payment_date: body.payment_date,
-      payment_status: body.payment_status,
-      invoice_number: body.invoice_number,
-      created_by: body.created_by,
-      updated_by: body.updated_by,
+      student_id,
+      course_id,
+      payment_method,
+      paid_amount,
+      due_amount,
+      payment_date,
+      payment_status,
+      invoice_number: invoice, // Generate invoice number
+      created_by,
+      updated_by,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -105,37 +152,7 @@ const getPayment = async (req, res) => {
         message: "Payment ID is required",
       });
     }
-    const payment = await Payment.findOne({
-      attributes: [
-        "id",
-        "student_id",
-        "course_id",
-        "payment_method",
-        "paid_amount",
-        "due_amount",
-        "payment_date",
-        "payment_status",
-        "invoice_number",
-        "created_by",
-        "updated_by",
-        "created_at",
-        "updated_at",
-        "deleted_at",
-      ],
-      include: [
-        {
-          model: Student,
-          as: "Student",
-          attributes: ["id", "first_name", "last_name", "email"],
-        },
-        {
-          model: Course,
-          as: "Course",
-          attributes: ["id", "course_name","fees","discount_fees"],
-        },
-      ],
-      where: { id: payment_id },
-    });
+    const payment = await getPaymentById(payment_id);
     if (!payment) {
       return res.status(constants.STATUS_CODES.NOT_FOUND).json({
         statusCode: constants.STATUS_CODES.NOT_FOUND,
@@ -196,7 +213,7 @@ const updatePayment = async (req, res) => {
         payment_method,
         paid_amount,
         due_amount,
-        payment_date,
+        payment_date: payment_date || payment.payment_date,
         payment_status,
         invoice_number,
         created_by,
