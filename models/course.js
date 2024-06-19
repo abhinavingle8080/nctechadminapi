@@ -59,16 +59,10 @@ module.exports = (sequelize) => {
     deleted_by: {
       type: DataTypes.INTEGER
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-
-    },
+    
     updated_at: {
       allowNull: false,
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
 
     },
     deleted_at: {
@@ -85,7 +79,11 @@ module.exports = (sequelize) => {
     tableName: 'courses',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    updatedAt: 'updated_at',
+    deletedAt: "deleted_at",
+    paranoid:true,
+    underscored:true
+
   });
 
   return Course;
