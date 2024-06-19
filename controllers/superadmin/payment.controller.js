@@ -78,6 +78,8 @@ const getAllPayments = async (req, res) => {
       order: [["id", "ASC"]],
       where: {
         [Op.or]: [
+          { '$Student.first_name$': { [Op.like]: `%${search}%` } },
+          { '$Student.last_name$': { [Op.like]: `%${search}%` } },
           { payment_status: { [Op.like]: `%${search}%` } },
         ],
       },
