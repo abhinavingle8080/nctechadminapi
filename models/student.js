@@ -20,6 +20,14 @@ module.exports = (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      course_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "courses",
+          key: "id",
+        },
+      },
       first_name: {
         type: DataTypes.STRING,
         allowNull: false,
