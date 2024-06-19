@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       // Define associations if any
     }
   }
-  
+
   Course.init({
     id: {
       type: DataTypes.INTEGER,
@@ -59,11 +59,9 @@ module.exports = (sequelize) => {
     deleted_by: {
       type: DataTypes.INTEGER
     },
-    
     updated_at: {
       allowNull: false,
-      type: DataTypes.DATE,
-
+      type: DataTypes.DATE
     },
     deleted_at: {
       allowNull: true,
@@ -72,6 +70,10 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.ENUM('Active', 'Inactive'),
       defaultValue: 'Active'
+    },
+    type: {
+      type: DataTypes.ENUM('Online', 'Offline'),
+      defaultValue: 'Online'
     }
   }, {
     sequelize,
@@ -80,10 +82,9 @@ module.exports = (sequelize) => {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    deletedAt: "deleted_at",
-    paranoid:true,
-    underscored:true
-
+    deletedAt: 'deleted_at',
+    paranoid: true,
+    underscored: true
   });
 
   return Course;
