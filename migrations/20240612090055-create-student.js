@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      course_id: {
+       course_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -17,6 +17,7 @@ module.exports = {
           key: 'id',
         },
       },
+     
       first_name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -69,6 +70,7 @@ module.exports = {
         type: Sequelize.ENUM('Active','Inactive'),
         allowNull: false,
       },
+      
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
