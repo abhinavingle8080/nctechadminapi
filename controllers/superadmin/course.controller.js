@@ -2,15 +2,47 @@ const { Course } = require('../../models');
 const constants = require('../../config/constants');
 
 const createCourse = async (req, res) => {
+  console.log('testing.....', req?.user?.id)
   try {
-    const course = await Course.create(req.body);
+    // Extract course data from request body
+    const {
+      course_name,
+      description,
+      fees,
+      discount_fees,
+      duration,
+      start_date,
+      end_date,
+      location,
+      max_capacity,
+      current_capacity,
+      // Assuming you get created_by from your authentication system
+      // Assuming you get updated_by from your authentication system
+    } = req.body;
+
+    // Create the course in the database
+    const course = await Course.create({
+      course_name,
+      description,
+      fees,
+      discount_fees,
+      duration,
+      start_date,
+      end_date,
+      location,
+      max_capacity,
+      current_capacity,
+      created_by : req?.user?.id,
+      updated_by :req?.user?.id,// Include updated_by value
+    });
+
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: 'Course created successfully',
       data: course
     });
   } catch (error) {
-    console.error('Error creating course:', error);
+    // console.error('Error creating course:', error);
     res.status(constants.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
       statusCode: constants.STATUS_CODES.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',

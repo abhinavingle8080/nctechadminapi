@@ -48,14 +48,31 @@ module.exports = {
       current_capacity: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 0, // Setting default value to 0 for current_capacity
       },
       created_by: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id"
+        }
       },
       updated_by: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id"
+        }
+      },
+      deleted_by: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "users",
+          key: "id"
+        }
       },
       created_at: {
         allowNull: false,
