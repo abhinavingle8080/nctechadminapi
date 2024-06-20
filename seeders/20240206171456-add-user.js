@@ -6,7 +6,7 @@ module.exports = {
     {
       first_name: "Super",
       last_name: "Admin",
-      email: "superadmin@ilomaadmin.com",
+      email: "superadmin@nctechadmin.com",
       password: "$2b$10$/zdWH2dwpJ/wdLyRRAejM.PL3Xgzx8.BXYiKIXtMAXle0.CK5Kzg.",
       role_id: 1,
       designation_id: 1,
