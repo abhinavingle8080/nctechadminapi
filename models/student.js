@@ -5,9 +5,10 @@ module.exports = (sequelize) => {
   class Student extends Model {
     static associate(models) {
       // Define associations here
-      Student.hasMany(models.Payment, {
-        foreignKey: 'student_id',
-        as: 'payments', // Alias to be used when querying
+      
+      Student.belongsTo(models.Course, {
+        foreignKey: "course_id",
+        as: "course",
       });
     }
   }
@@ -82,6 +83,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: 'Active',
       },
+     
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,

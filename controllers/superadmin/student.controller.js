@@ -1,4 +1,4 @@
-const { Student, Payment } = require("../../models");
+const { Student, Course } = require("../../models");
 const constants = require("../../config/constants");
 const { Op } = require("sequelize");
 
@@ -11,6 +11,7 @@ const getAllStudents = async (req, res) => {
     const students = await Student.findAndCountAll({
       attributes: [
         "id",
+        "course_id",
         "first_name",
         "last_name",
         "email",
@@ -30,9 +31,9 @@ const getAllStudents = async (req, res) => {
       ],
       include: [
         {
-          model: Payment,
-          as: "payments",
-          attributes: ["id", "paid_amount", "due_amount", "payment_date"],
+          model: Course,
+          as: "course",
+          attributes: ["id", "course_name"],
         },
       ],
       offset: offset,
@@ -66,6 +67,7 @@ const getAllStudents = async (req, res) => {
 const createStudent = async (req, res) => {
   try {
     const {
+      course_id,
       first_name,
       last_name,
       email,
@@ -95,6 +97,7 @@ const createStudent = async (req, res) => {
     }
 
     const newStudent = await Student.create({
+      course_id,
       first_name,
       last_name,
       email,
@@ -135,6 +138,7 @@ const getStudent = async (req, res) => {
     const student = await Student.findOne({
       where: { id: student_id },
       attributes: [
+        "course_id",
         "id",
         "first_name",
         "last_name",
@@ -155,9 +159,9 @@ const getStudent = async (req, res) => {
       ],
       include: [
         {
-          model: Payment,
-          as: "payments",
-          attributes: ["id", "paid_amount", "due_amount", "payment_date"],
+          model: Course,
+          as: "course",
+          attributes: ["id", "course_name"],
         },
       ],
     });
@@ -188,6 +192,7 @@ const getStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
   try {
     const {
+      course_id,
       first_name,
       last_name,
       email,
@@ -214,6 +219,7 @@ const updateStudent = async (req, res) => {
     }
 
     await student.update({
+      course_id,
       first_name,
       last_name,
       email,
