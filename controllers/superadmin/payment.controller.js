@@ -3,7 +3,7 @@ const constants = require("../../config/constants");
 const { Op } = require("sequelize");
 const app = require("../../services/app.service");
 const config = require("../../config/app.json")[app["env"]];
-const { generateInvoiceNumber } = require("../../helpers/common.helper");
+const { generateInvoiceNumber } = require("../../helpers/generateInvoiceNumber");
 
 const getPaymentById = async (payment_id) => {
   return await Payment.findOne({
