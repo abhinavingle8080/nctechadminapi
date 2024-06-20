@@ -1,5 +1,3 @@
-// models/course.js
-
 'use strict';
 const { Model, DataTypes } = require('sequelize');
 
@@ -48,7 +46,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER
     },
     current_capacity: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      defaultValue: 0 // Default value set to 0
     },
     created_by: {
       type: DataTypes.INTEGER,
