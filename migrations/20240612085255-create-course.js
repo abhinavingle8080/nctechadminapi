@@ -68,9 +68,13 @@ module.exports = {
       deleted_at: {
         allowNull: true,
         type: Sequelize.DATE
-          },
+      },
       status: {
         type: Sequelize.ENUM('Active', 'Inactive'),
+        allowNull: false,
+      },
+      type: {
+        type: Sequelize.ENUM('Online', 'Offline'),
         allowNull: false,
       }
     });

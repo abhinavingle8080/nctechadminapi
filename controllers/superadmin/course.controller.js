@@ -29,6 +29,7 @@ const getAllCourses = async (req, res) => {
       attributes : [
         "id",
         "status",
+        "type",
         "course_name",
         "description",
         "fees",
