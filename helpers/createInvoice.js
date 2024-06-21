@@ -3,7 +3,6 @@ const PDFDocument = require("pdfkit");
 
 const createInvoice = (data, filePath) => {
     const doc = new PDFDocument({ size: "A4" });
-
     doc.pipe(fs.createWriteStream(filePath));
 
     // Add background image with adjusted top margin
@@ -92,7 +91,7 @@ const createInvoice = (data, filePath) => {
             .font("Helvetica")
             .fontSize(12)
             .text(product.name, tableColumns[0].x, currentY)
-            .text(product.amount, tableColumns[1].x, currentY)
+            .text(`${parseFloat(product.amount).toFixed(2)}`, tableColumns[1].x, currentY)
             .text(product.discount, tableColumns[2].x, currentY)
             .text(`${parseFloat(product.total).toFixed(2)}`, tableColumns[3].x, currentY);
         currentY += 20;

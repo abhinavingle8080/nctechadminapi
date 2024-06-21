@@ -1,6 +1,7 @@
 const { Payment, Student, Course } = require("../../models");
 const constants = require("../../config/constants");
 const { Op } = require("sequelize");
+const Sequelize = require("sequelize");
 const app = require("../../services/app.service");
 const config = require("../../config/app.json")[app["env"]];
 const { generateInvoiceNumber } = require("../../helpers/generateInvoiceNumber");
@@ -20,6 +21,7 @@ const getPaymentById = async (payment_id) => {
       "payment_date",
       "payment_status",
       "invoice_number",
+      [Sequelize.fn("concat", `${config.STORAGE_BASE_URL}/`, Sequelize.col("invoice_url")), "invoice_url"],
       "created_by",
       "updated_by",
       "created_at",
@@ -58,6 +60,7 @@ const getAllPayments = async (req, res) => {
         "payment_date",
         "payment_status",
         "invoice_number",
+        [Sequelize.fn("concat", `${config.STORAGE_BASE_URL}/`, Sequelize.col("invoice_url")), "invoice_url"],
         "created_by",
         "updated_by",
         "created_at",
@@ -115,7 +118,8 @@ const createPayment = async (req, res) => {
       updated_by,
     } = req.body;
 
-    const payment_date = req.body.payment_date || new Date(); // Use current date if not provided
+    const fileName = moment().format("YYYY-MM-DD-HH-mm-ss") + ".pdf";
+    const payment_date = req.body.payment_date || new Date();
     const invoice = await generateInvoiceNumber();
     const payment_data = await Payment.create({
       student_id,
@@ -125,7 +129,8 @@ const createPayment = async (req, res) => {
       due_amount,
       payment_date,
       payment_status,
-      invoice_number: invoice, // Generate invoice number
+      invoice_number: invoice,
+      invoice_url: "invoice/" + fileName,
       created_by,
       updated_by,
       created_at: new Date(),
@@ -144,14 +149,8 @@ const createPayment = async (req, res) => {
 
     const getPaymentDetails = await getPaymentById(payment_data.id);
 
-
-
-
-
-
     const data = {
       images: {
-        // The invoice background
         background: fs.readFileSync("invoiceBackImage.png", "base64"),
       },
       sender: {
@@ -177,10 +176,10 @@ const createPayment = async (req, res) => {
       products: [
         {
           name: getCourseDetails.course_name,
-          amount: getCourseDetails.fees,
+          amount: paid_amount,
           discount: "       -       ",
-          price: getCourseDetails.fees,
-          total: getCourseDetails.fees,
+          price: paid_amount,
+          total: paid_amount,
         },
       ],
       "bottom-notice": "Thank you for choosing us.",
@@ -202,7 +201,11 @@ const createPayment = async (req, res) => {
       },
     };
 
-    createInvoice(data, "storage/invoice/" + moment().format("YYYY-MM-DD-HH-mm-ss") + ".pdf");
+    if (!fs.existsSync("storage/invoice")) {
+      fs.mkdirSync("storage/invoice", { recursive: true });
+    }
+
+    createInvoice(data, "storage/invoice/" + fileName);
 
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,

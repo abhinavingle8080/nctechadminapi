@@ -46,6 +46,10 @@ module.exports = {
       invoice_number: {
         type: Sequelize.STRING(50),
       },
+      invoice_url: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+      },
       created_by: {
         type: Sequelize.INTEGER,
       },
