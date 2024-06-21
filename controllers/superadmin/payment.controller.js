@@ -4,6 +4,9 @@ const { Op } = require("sequelize");
 const app = require("../../services/app.service");
 const config = require("../../config/app.json")[app["env"]];
 const { generateInvoiceNumber } = require("../../helpers/generateInvoiceNumber");
+const {createInvoice} = require("../../helpers/createInvoice");
+const fs = require("fs");
+const moment = require("moment");
 
 const getPaymentById = async (payment_id) => {
   return await Payment.findOne({
@@ -114,7 +117,6 @@ const createPayment = async (req, res) => {
 
     const payment_date = req.body.payment_date || new Date(); // Use current date if not provided
     const invoice = await generateInvoiceNumber();
-    console.log('invoice', invoice);
     const payment_data = await Payment.create({
       student_id,
       course_id,
@@ -129,6 +131,77 @@ const createPayment = async (req, res) => {
       created_at: new Date(),
       updated_at: new Date(),
     });
+
+    const getStudentDetails = await Student.findOne({
+      attributes: ["first_name", "last_name" , "phone_no"],
+      where: { id: student_id },
+    });
+
+    const getCourseDetails = await Course.findOne({
+      attributes: ["course_name", "fees", "discount_fees","type"],
+      where: { id: course_id },
+    });
+
+    const getPaymentDetails = await getPaymentById(payment_data.id);
+
+
+
+
+
+
+    const data = {
+      images: {
+        // The invoice background
+        background: fs.readFileSync("invoiceBackImage.png", "base64"),
+      },
+      sender: {
+        company:
+          "Non Criterion Technology",
+        address: "Saraswati Apartment Buldhana",
+        zip: "440024",
+        city: "Buldhana",
+        country: "India",
+      },
+      client: {
+        company: getStudentDetails.first_name + " " + getStudentDetails.last_name,
+        contact: getStudentDetails.phone_no,
+        address: "Buldhana Maharashtra",
+        zip: "440024",
+        city: "Buldhana",
+        country: "India",
+      },
+      information: {
+        number: " ",
+        date: moment().format("YYYY-MM-DD-hh-mm-ss"),
+      },
+      products: [
+        {
+          name: getCourseDetails.course_name,
+          discount: getCourseDetails.discount_fees,
+          price: getCourseDetails.fees,
+          total: getCourseDetails.fees,
+        },
+      ],
+      "bottom-notice": "Thank you for choosing us.",
+      settings: {
+        currency: "INR",
+        locale: "en-IN",
+        "tax-notation": "gst",
+        "margin-top": 50,
+        "margin-right": 50,
+        "margin-left": 50,
+        "margin-bottom": 50,
+      },
+      translate: {
+        invoice: "Payment Receipt",
+        number: "Invoice",
+        products: "Items",
+        price: " ",
+        total: " ",
+      },
+    };
+
+    createInvoice(data, "storage/invoice/" + moment().format("YYYY-MM-DD-HH-mm-ss") + ".pdf");
 
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
