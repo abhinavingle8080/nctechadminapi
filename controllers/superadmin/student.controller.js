@@ -269,6 +269,7 @@ const deleteStudent = async (req, res) => {
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: "Student deleted successfully",
+      success: true,
     });
   } catch (error) {
     console.error(error);
