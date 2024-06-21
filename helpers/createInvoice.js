@@ -68,8 +68,8 @@ const createInvoice = (data, filePath) => {
 
     const tableColumns = [
         { title: "Course", x: tableStartX + 10, width: 200 },
-        { title: " ", x: tableStartX + 220, width: 70 },
-        { title: "Amount", x: tableStartX + 300, width: 70 },
+        { title: "Amount ", x: tableStartX + 220, width: 70 },
+        { title: "Discount ", x: tableStartX + 300, width: 70 },
         { title: "Total", x: tableStartX + 380, width: 100 },
     ];
 
@@ -92,15 +92,15 @@ const createInvoice = (data, filePath) => {
             .font("Helvetica")
             .fontSize(12)
             .text(product.name, tableColumns[0].x, currentY)
-            .text(product.quantity, tableColumns[1].x, currentY)
-            .text(`${parseFloat(product.price).toFixed(2)}`, tableColumns[2].x, currentY)
+            .text(product.amount, tableColumns[1].x, currentY)
+            .text(product.discount, tableColumns[2].x, currentY)
             .text(`${parseFloat(product.total).toFixed(2)}`, tableColumns[3].x, currentY);
         currentY += 20;
     });
 
     // Subtotal and Amount Paid
     const totalsYPosition = currentY + 20;
-    const amountPaid = parseFloat(5000);
+    const amountPaid = parseFloat(data.products[0].amount);
 
     doc
         .font("Helvetica-Bold")

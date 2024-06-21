@@ -177,7 +177,8 @@ const createPayment = async (req, res) => {
       products: [
         {
           name: getCourseDetails.course_name,
-          discount: getCourseDetails.discount_fees,
+          amount: getCourseDetails.fees,
+          discount: "       -       ",
           price: getCourseDetails.fees,
           total: getCourseDetails.fees,
         },
