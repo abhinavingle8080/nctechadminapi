@@ -2,7 +2,7 @@ const { Course } = require('../../models');
 const constants = require('../../config/constants');
 
 const createCourse = async (req, res) => {
-  console.log('testing.....', req?.user?.id)
+  console.log(req?.user?.id)
   try {
     // Extract course data from request body
     const {
@@ -16,8 +16,7 @@ const createCourse = async (req, res) => {
       location,
       max_capacity,
       current_capacity,
-      // Assuming you get created_by from your authentication system
-      // Assuming you get updated_by from your authentication system
+
     } = req.body;
 
     // Create the course in the database
@@ -42,7 +41,6 @@ const createCourse = async (req, res) => {
       data: course
     });
   } catch (error) {
-    // console.error('Error creating course:', error);
     res.status(constants.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
       statusCode: constants.STATUS_CODES.INTERNAL_SERVER_ERROR,
       message: 'Internal Server Error',
@@ -137,17 +135,11 @@ const updateCourse = async (req, res) => {
       });
     }
 
-    // Log current course details for debugging
-    console.log('Current Course Details:', course.toJSON());
-
     // Perform updates on the course object
     await course.update({
       ...updates, // Update all fields based on req.body
-      updated_at: new Date(), // Ensure updated_at is updated
+      updated_at: new Date(), 
     });
-
-    // Log updated course details for debugging
-    console.log('Updated Course Details:', course.toJSON());
 
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
@@ -190,6 +182,7 @@ const deleteCourse = async (req, res) => {
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: 'Course deleted successfully',
+      success: true,
     });
   } catch (error) {
     console.error('Error deleting course:', error);
