@@ -81,7 +81,7 @@ const getAllPayments = async (req, res) => {
       ],
       offset: offset,
       limit: parseInt(limit),
-      order: [["id", "ASC"]],
+      order: [["id", "DESC"]],
       where: {
         [Op.or]: [
           { '$Student.first_name$': { [Op.like]: `%${search}%` } },
@@ -156,7 +156,7 @@ const createPayment = async (req, res) => {
       sender: {
         company:
           "Non Criterion Technology",
-        address: "Saraswati Apartment Buldhana",
+        address: "Saraswati Apartment Circular Road Buldhana",
         zip: "440024",
         city: "Buldhana",
         country: "India",
@@ -178,7 +178,7 @@ const createPayment = async (req, res) => {
           name: getCourseDetails.course_name,
           amount: paid_amount,
           discount: "       -       ",
-          price: paid_amount,
+          price: getCourseDetails.fees,
           total: paid_amount,
         },
       ],
