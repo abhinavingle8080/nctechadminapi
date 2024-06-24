@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
 const app = require("../../services/app.service");
 const config = require("../../config/app.json")[app["env"]];
 const { generateInvoiceNumber } = require("../../helpers/generateInvoiceNumber");
-const {createInvoice} = require("../../helpers/createInvoice");
+const { createInvoice } = require("../../helpers/createInvoice");
 const fs = require("fs");
 const moment = require("moment");
 
@@ -32,12 +32,12 @@ const getPaymentById = async (payment_id) => {
       {
         model: Student,
         as: "Student",
-        attributes: ["id", "first_name", "last_name", "email"],
+        attributes: ["id", "first_name", "last_name", "email","address", "phone_no"],
       },
       {
         model: Course,
         as: "Course",
-        attributes: ["id", "course_name", "fees", "discount_fees"],
+        attributes: ["id", "course_name", "fees", "discount_fees", "type"],
       },
     ],
     where: { id: payment_id },
@@ -46,8 +46,17 @@ const getPaymentById = async (payment_id) => {
 
 const getAllPayments = async (req, res) => {
   try {
-    const { page, limit, search } = req.body;
+    const { page, limit, search, from_date, to_date } = req.body;
     const offset = (parseInt(page) - 1) * parseInt(limit);
+
+    let dateFilter = {};
+    if (from_date && to_date) {
+      dateFilter = {
+        payment_date: {
+          [Op.between]: [new Date(from_date), new Date(to_date)]
+        }
+      };
+    }
 
     const payments = await Payment.findAndCountAll({
       attributes: [
@@ -71,18 +80,19 @@ const getAllPayments = async (req, res) => {
         {
           model: Student,
           as: "Student",
-          attributes: ["id", "first_name", "last_name", "email"],
+          attributes: ["id", "first_name", "last_name", "email","address", "phone_no"],
         },
         {
           model: Course,
           as: "Course",
-          attributes: ["id", "course_name", "fees", "discount_fees"],
+          attributes: ["id", "course_name", "fees", "discount_fees", "type"],
         },
       ],
       offset: offset,
       limit: parseInt(limit),
       order: [["id", "DESC"]],
       where: {
+        ...dateFilter,
         [Op.or]: [
           { '$Student.first_name$': { [Op.like]: `%${search}%` } },
           { '$Student.last_name$': { [Op.like]: `%${search}%` } },
@@ -90,6 +100,7 @@ const getAllPayments = async (req, res) => {
         ],
       },
     });
+
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: "Payments retrieved successfully",
@@ -138,7 +149,7 @@ const createPayment = async (req, res) => {
     });
 
     const getStudentDetails = await Student.findOne({
-      attributes: ["first_name", "last_name" , "phone_no"],
+      attributes: ["first_name", "last_name" , "phone_no", "email","address"],
       where: { id: student_id },
     });
 
@@ -154,8 +165,7 @@ const createPayment = async (req, res) => {
         background: fs.readFileSync("invoiceBackImage.png", "base64"),
       },
       sender: {
-        company:
-          "Non Criterion Technology",
+        company: "Non Criterion Technology",
         address: "Saraswati Apartment Circular Road Buldhana",
         zip: "440024",
         city: "Buldhana",
