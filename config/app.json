@@ -10,6 +10,7 @@
         "REQ_BASE_URL": "http://localhost:3000",
         "IMAGE_RELATIVE_PATH": "storage/images",
         "IMAGE_PATH": "http://localhost:8020/storage/images",
+        "STORAGE_BASE_URL": "http://localhost:8020/storage",
         "PORT": 8000,
         "FCM_SERVER_KEY": "",
         "ADMIN_BASE_URL": "http://localhost:3000"
@@ -25,6 +26,7 @@
         "REQ_BASE_URL": "https://api.colorpencildev.ilserver.cloud",
         "IMAGE_RELATIVE_PATH": "storage/images",
         "IMAGE_PATH": "https://api.colorpencildev.ilserver.cloud/storage/images",
+        "STORAGE_BASE_URL": "https://api.colorpencildev.ilserver.cloud/storage",
         "PORT": 8000,
         "FCM_SERVER_KEY": "",
         "ADMIN_BASE_URL": "https://admin.colorpencildev.ilserver.cloud"
@@ -40,6 +42,7 @@
         "REQ_BASE_URL": "https://api.colorpencilstage.ilserver.cloud",
         "IMAGE_RELATIVE_PATH": "storage/images",
         "IMAGE_PATH": "https://api.colorpencilstage.ilserver.cloud/storage/images",
+        "STORAGE_BASE_URL": "https://api.colorpencilstage.ilserver.cloud/storage",
         "PORT": 8000,
         "FCM_SERVER_KEY": "",
         "ADMIN_BASE_URL": "https://admin.colorpencilstage.ilserver.cloud"
@@ -55,6 +58,7 @@
         "REQ_BASE_URL": "https://api.colorpenciluat.ilserver.cloud",
         "IMAGE_RELATIVE_PATH": "storage/images",
         "IMAGE_PATH": "https://api.colorpenciluat.ilserver.cloud/storage/images",
+        "STORAGE_BASE_URL": "https://api.colorpenciluat.ilserver.cloud/storage",
         "PORT": 1337,
         "FCM_SERVER_KEY": "",
         "ADMIN_BASE_URL": "https://admin.colorpenciluat.ilserver.cloud"
@@ -70,6 +74,7 @@
         "REQ_BASE_URL": "https://api.colorpencildev.ilserver.cloud",
         "IMAGE_RELATIVE_PATH": "storage/images",
         "IMAGE_PATH": "https://api.colorpencildev.ilserver.cloud/storage/images",
+        "STORAGE_BASE_URL": "https://api.colorpencildev.ilserver.cloud/storage",
         "PORT": 1337,
         "FCM_SERVER_KEY": "",
         "ADMIN_BASE_URL": "https://admin.colorpencildev.ilserver.cloud"
