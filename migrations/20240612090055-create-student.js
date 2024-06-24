@@ -50,6 +50,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       parents_contact_no: {
         type: Sequelize.STRING,
         allowNull: false,

@@ -1,6 +1,11 @@
 const { Student, Course } = require("../../models");
 const constants = require("../../config/constants");
 const { Op } = require("sequelize");
+const path = require('path');
+const Sequelize = require("sequelize");
+const app = require("../../services/app.service");
+const config = require("../../config/app.json")[app["env"]];
+const helper = require("../../helpers/fileupload.helper");
 
 // Get all students with pagination and search
 const getAllStudents = async (req, res) => {
@@ -20,7 +25,9 @@ const getAllStudents = async (req, res) => {
         "phone_no",
         "education",
         "college",
+        "address",
         "parents_contact_no",
+        [Sequelize.fn("concat", `${config.IMAGE_PATH}/`, Sequelize.col("profile_image")), "profile_image"],
         "profile_image",
         "id_proof",
         "admission_date",
@@ -65,6 +72,7 @@ const getAllStudents = async (req, res) => {
 
 // Create a new student
 const createStudent = async (req, res) => {
+  console.log('testing....')
   try {
     const {
       course_id,
@@ -76,12 +84,20 @@ const createStudent = async (req, res) => {
       phone_no,
       education,
       college,
+      address,
       parents_contact_no,
-      profile_image,
       id_proof,
       admission_date,
       status,
     } = req.body;
+    const files = req.files;
+    const baseFileUploadPath = `storage/images/users`;
+    let relativePath = null;
+    if (files && files?.profile_image) {
+      const fileName = files?.profile_image?.name;
+      relativePath = "users/" + fileName;
+      const fileUpload = await helper.fileUpload(fileName, files?.profile_image, baseFileUploadPath);
+    }
 
     const existingStudent = await Student.findOne({
       where: {
@@ -106,8 +122,9 @@ const createStudent = async (req, res) => {
       phone_no,
       education,
       college,
+      address,
       parents_contact_no,
-      profile_image,
+      profile_image: relativePath,
       id_proof,
       admission_date,
       status,
@@ -148,6 +165,7 @@ const getStudent = async (req, res) => {
         "phone_no",
         "education",
         "college",
+        "address",
         "parents_contact_no",
         "profile_image",
         "id_proof",
@@ -156,6 +174,7 @@ const getStudent = async (req, res) => {
         "created_at",
         "updated_at",
         "deleted_at",
+        [Sequelize.fn("concat", `${config.IMAGE_PATH}/`, Sequelize.col("profile_image")), "profile_image"]
       ],
       include: [
         {
@@ -201,6 +220,7 @@ const updateStudent = async (req, res) => {
       phone_no,
       education,
       college,
+      address,
       parents_contact_no,
       profile_image,
       id_proof,
@@ -217,6 +237,7 @@ const updateStudent = async (req, res) => {
         message: "Student not found",
       });
     }
+    
 
     await student.update({
       course_id,
@@ -228,6 +249,7 @@ const updateStudent = async (req, res) => {
       phone_no,
       education,
       college,
+      address,
       parents_contact_no,
       profile_image,
       id_proof,

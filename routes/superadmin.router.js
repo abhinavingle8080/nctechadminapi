@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
+
 // Controllers
 const AuthController = require('../controllers/superadmin/auth.controller');
 const holidayController = require('../controllers/superadmin/holiday.controller');
@@ -16,7 +17,7 @@ const designationController = require('../controllers/superadmin/designation.con
 const teamController = require('../controllers/superadmin/team.controller');
 const paymentController = require('../controllers/superadmin/payment.controller');
 const courseController = require('../controllers/superadmin/course.controller');
-const studentController = require('../controllers/superadmin/student.controller')
+const studentController = require('../controllers/superadmin/student.controller');
 
 // Authentication routes
 router.post('/login', AuthController.login);

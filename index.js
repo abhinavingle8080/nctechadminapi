@@ -25,6 +25,7 @@ app.use(cors());
 app.use('/storage', express.static(__dirname + '/storage')); // Serve Static Data
 app.use('/language', express.static(__dirname + '/languages')); // Localization Files
 
+
 // Initialize Passport
 app.use(passport.initialize());
 // app.use(authenticateToken);
