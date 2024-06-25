@@ -53,7 +53,9 @@ const getAllPayments = async (req, res) => {
     if (from_date && to_date) {
       dateFilter = {
         payment_date: {
-          [Op.between]: [new Date(from_date), new Date(to_date)]
+          [Op.between]: [
+            moment(from_date).startOf('day').toDate(),
+            moment(to_date).endOf('day').toDate()]
         }
       };
     }
@@ -167,21 +169,21 @@ const createPayment = async (req, res) => {
       sender: {
         company: "Non Criterion Technology",
         address: "Saraswati Apartment Circular Road Buldhana",
-        zip: "440024",
+       contact: "9309393108",
         city: "Buldhana",
-        country: "India",
+        country: "INDIA",
       },
       client: {
         company: getStudentDetails.first_name + " " + getStudentDetails.last_name,
         contact: getStudentDetails.phone_no,
-        address: "Buldhana Maharashtra",
+        address: getStudentDetails.address,
         zip: "440024",
         city: "Buldhana",
-        country: "India",
+        country: "INDIA",
       },
       information: {
-        number: " ",
-        date: moment().format("YYYY-MM-DD-hh-mm-ss"),
+        number: "INVOICE : " + invoice,
+        date : moment().format("YYYY-MM-DD-hh-mm-ss"),
       },
       products: [
         {
@@ -204,8 +206,8 @@ const createPayment = async (req, res) => {
       },
       translate: {
         invoice: "Payment Receipt",
-        number: "Invoice",
-        products: "Items",
+        number: "INVOICE" + invoice,
+        products: " ",
         price: " ",
         total: " ",
       },

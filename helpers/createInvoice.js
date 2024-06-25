@@ -25,8 +25,9 @@ const createInvoice = (data, filePath) => {
     doc
         .font("Helvetica")
         .fontSize(12)
-        .text(`Address: ${data.sender.address}`, 50, senderYPosition + 15)
-        .text(`Country: ${data.sender.country}`, 50, senderYPosition + 35);
+        .text(`Address: ${data.sender.address}`, 50, senderYPosition + 20)
+        // .text(`Contact No : ${data.sender.contact}`, 50, senderYPosition + 25)
+        .text(`Contact No: ${data.sender.contact}`, 50, senderYPosition + 35);
 
     // Divider Line
     doc
@@ -41,12 +42,13 @@ const createInvoice = (data, filePath) => {
         .font("Helvetica")
         .fontSize(12)
         .text(`Address: ${data.client.address}`, 50, clientYPosition + 20)
-        .text(`Country: ${data.client.country}`, 50, clientYPosition + 35);
+        .text(`Country: ${data.client.contact}`, 50, clientYPosition + 35);
 
     // Invoice details
     const invoiceYPosition = clientYPosition + 50;
     const invoiceXPosition = 390; // Adjust this value to move invoice details horizontally
-    doc.font("Helvetica-Bold").fontSize(14).text(`${data.translate.number}: ${data.information.number}`, invoiceXPosition, clientYPosition);
+    doc.font("Helvetica-Bold").fontSize(12).text(`${data?.information?.number}`, invoiceXPosition, clientYPosition);
+
     doc
         .font("Helvetica")
         .fontSize(12)
@@ -58,7 +60,7 @@ const createInvoice = (data, filePath) => {
 
     // Products Table
     const productsYPosition = invoiceYPosition + 40;
-    doc.font("Helvetica-Bold").fontSize(14).text(`${data.translate.products}:`, 50, productsYPosition);
+    doc.font("Helvetica-Bold").fontSize(14).text(`${data.translate.products} `, 50, productsYPosition);
 
     // Table Header
     const tableHeaderY = productsYPosition + 20;
@@ -104,10 +106,10 @@ const createInvoice = (data, filePath) => {
     doc
         .font("Helvetica-Bold")
         .fontSize(12)
-        .text("Subtotal:", 350, totalsYPosition)
+        .text("Subtotal", 350, totalsYPosition)
         .text(`${amountPaid.toFixed(2)}`, 460, totalsYPosition, { align: "right" });
 
-    doc.text("Amount Paid:", 350, totalsYPosition + 20).text(`${amountPaid.toFixed(2)}`, 460, totalsYPosition + 20, { align: "right" });
+    doc.text("Amount Paid", 350, totalsYPosition + 20).text(`${amountPaid.toFixed(2)}`, 460, totalsYPosition + 20, { align: "right" });
 
     // Bottom notice
     doc
