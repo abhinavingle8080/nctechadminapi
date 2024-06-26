@@ -72,7 +72,6 @@ const getAllStudents = async (req, res) => {
 
 // Create a new student
 const createStudent = async (req, res) => {
-  console.log('testing....')
   try {
     const {
       course_id,
