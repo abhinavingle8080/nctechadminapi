@@ -18,6 +18,7 @@ const teamController = require('../controllers/superadmin/team.controller');
 const paymentController = require('../controllers/superadmin/payment.controller');
 const courseController = require('../controllers/superadmin/course.controller');
 const studentController = require('../controllers/superadmin/student.controller');
+const noteController = require('../controllers/superadmin/note.controller')
 
 // Authentication routes
 router.post('/login', AuthController.login);
@@ -89,6 +90,14 @@ router.post('/create-student', studentController.createStudent);
 router.post('/get-student', studentController.getStudent);
 router.post('/update-student', studentController.updateStudent);
 router.post('/delete-student', studentController.deleteStudent);
+
+// Note routes
+router.post('/create-notes', passport.authenticate('jwt', { session: false }), noteController.createNote);
+router.post('/get-notes', passport.authenticate('jwt', { session: false }), noteController.getAllNotes);
+router.post('/get-note', passport.authenticate('jwt', { session: false }), noteController.getNoteById);
+router.post('/update-note', passport.authenticate('jwt', { session: false }), noteController.updateNote);
+router.post('/delete-note', passport.authenticate('jwt', { session: false }), noteController.deleteNote);
+
 
 
 module.exports = router;
