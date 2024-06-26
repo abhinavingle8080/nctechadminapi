@@ -55,7 +55,7 @@ const getAllCourses = async (req, res) => {
     const courses = await Course.findAndCountAll({
       offset: (parseInt(body.page) - 1) * parseInt(body.limit),
       limit: parseInt(body.limit),
-      order: [["id", "ASC"]],
+      order: [["id", "DESC"]],
       attributes : [
         "id",
         "status",
