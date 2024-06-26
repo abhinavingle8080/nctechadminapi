@@ -18,6 +18,7 @@ const teamController = require('../controllers/superadmin/team.controller');
 const paymentController = require('../controllers/superadmin/payment.controller');
 const courseController = require('../controllers/superadmin/course.controller');
 const studentController = require('../controllers/superadmin/student.controller');
+const batchController = require('../controllers/superadmin/batch.controller');
 
 // Authentication routes
 router.post('/login', AuthController.login);
@@ -89,6 +90,13 @@ router.post('/create-student', studentController.createStudent);
 router.post('/get-student', studentController.getStudent);
 router.post('/update-student', studentController.updateStudent);
 router.post('/delete-student', studentController.deleteStudent);
+
+// Bathch routes
+router.post('/create-batch', passport.authenticate('jwt', { session: false }), batchController.createBatch);
+router.post('/get-batches', passport.authenticate('jwt', { session: false }), batchController.getAllBatches);
+router.post('/get-batch', passport.authenticate('jwt', { session: false }), batchController.getBatch);
+router.post('/update-batch', passport.authenticate('jwt', { session: false }), batchController.updateBatch);
+router.post('/delete-batch', passport.authenticate('jwt', { session: false }), batchController.deleteBatch);
 
 
 module.exports = router;

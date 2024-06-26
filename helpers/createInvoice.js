@@ -42,7 +42,7 @@ const createInvoice = (data, filePath) => {
         .font("Helvetica")
         .fontSize(12)
         .text(`Address: ${data.client.address}`, 50, clientYPosition + 20)
-        .text(`Country: ${data.client.contact}`, 50, clientYPosition + 35);
+        .text(`Contact: ${data.client.contact}`, 50, clientYPosition + 35);
 
     // Invoice details
     const invoiceYPosition = clientYPosition + 50;

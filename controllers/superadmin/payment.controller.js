@@ -183,7 +183,7 @@ const createPayment = async (req, res) => {
       },
       information: {
         number: "INVOICE : " + invoice,
-        date : moment().format("YYYY-MM-DD-hh-mm-ss"),
+        date : moment().format("YYYY-MM-DD"),
       },
       products: [
         {
