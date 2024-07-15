@@ -1,0 +1,166 @@
+{
+	"greeting": "Hello!",
+	"message": "Welcome to the NCTech Portal",
+	"ErrorMessage": "Something went wrong",
+	"Auth": {
+		"Signin": "Login Successfully",
+		"Pending": "Your account is already in review, we will inform as soon review completed. Thank you",
+		"Rejected": "Your account verification status is rejected by admin",
+		"Blocked": "Your account has been locked. Please contact with administrator",
+		"Registered": "You have already registered in our system",
+		"EmailValidation": "Please enter the registered email address",
+		"UserNotRegisterd": "This email is not registered with us. Please sign up to continue.",
+		"InvalidCredentials": "Incorrect Password",
+		"AlreadyRegisteredEmail": "This email address has already registered",
+		"AlreadyRegisteredPhone": "This phone number has already registered",
+		"Signup": "Congratulations, your account has been successfully created",
+		"ResetPasswordLinkSent": "Reset password link is sent to your registered Email id",
+		"EmailNotExist": "Email not exist",
+		"EmailIsNotRegistered": "This email is not registered",
+		"AlreadyExist": "already exists",
+		"EmailAlreadyExist": "Email already exists",
+		"PhoneAlreadyExist": "Phone already exists",
+		"AlreadyTaken": "has already been taken",
+		"CodeSent": "Code has been sent to ",
+		"InvalidOtp": "Incorrect OTP",
+		"OtpVerified": "OTP verified successfully",
+		"PasswordReset": "Password reset successfully",
+		"PasswordUpdated": "Password updated successfully",
+		"PasswordRequired": "Password is required",
+		"GoogleIDRequired": "Google id is required",
+		"FacebookIDRequired": "Facebook id is required",
+		"AppleIDRequired": "Apple id is required",
+		"PleaseUseSocialLogin": "Please login using social sign-in to access your account"
+	},
+	"Common": {
+		"Column": {
+			"Name": "Name",
+			"Status": "Status",
+			"User": "User"
+		},
+		"Validation": {
+			"IdNotExistMessage": "id does not exist",
+			"IdRequired": "id is required",
+			"IsRequired": "is required",
+			"PasswordNotMatch": "New password and confirm password does not match",
+			"PasswordSame": "New password and old password should not be same",
+			"IncorrectPassword": "Current password is incorrect",
+			"InvalidOldPassword": "invalid old password",
+			"NameAlreadyExist": "This name already exists",
+			"NotExist": "does not exist",
+			"StartDateGreaterThanEndDate": "Start date should be less than end date"
+		},
+		"Success": {
+			"SuccessListMessage": "fetched successfully",
+			"InsertRecordMessage": "added successfully",
+			"UpdateRecordMessage": "updated successfully",
+			"DeleteRecordMessage": "deleted successfully",
+			"UploadMessage": "uploaded successfully",
+			"CreatedSuccess": "created successfully",
+			"InsertMessage": "Common.Success.InsertMessage",
+			"Blocked": "blocked successfully",
+			"Unblocked": "unblocked successfully"
+		},
+		"Error": {
+			"ErrorMessage": "Something went wrong",
+			"NotFound": "Not Found",
+			"NotExist": "does not exist",
+			"RecordNotFound": "Record Not Found",
+			"TryAfterSometime": "Please try after sometime",
+			"NoDataFound": "Data not found",
+			"ExerciseNoAlreadyExist": "Exercise no already exists",
+			"AlreadyExistMessage": "Already exists"
+		}
+	},
+	"UserProfile": {
+		"UserProfile": "User Profile",
+		"UserProfiles": "User Profiles",
+		"UserProfileImage": "User Profile Image",
+		"UserProfileDetails": "User Profile Details",
+		"AboutUs": "About me",
+		"Profiles": "Profiles",
+		"Account": "Account",
+		"UserRegistered": "User registered successfully",
+		"Logout": "Logout Successfully, Have a nice day!",
+		"Profile": "Profile",
+		"LockProfile": "Your profile has been locked successfully",
+		"UnlockProfile": "Your profile has been unlocked successfully",
+		"NotificationDisable": "Your notifications has been disabled successfully",
+		"NotificationEnable": "Your notifications has been enabled successfully",
+		"PasswordUpdate": "Password updated successfully"
+	},
+	"Profile": {
+		"Profile": "Profile",
+		"Profiles": "Profiles",
+		"ProfileImage": "Profile Image",
+		"ProfileDetails": "Profile Details",
+		"AboutUs": "About me",
+		"Account": "Account",
+		"Registered": " registered successfully",
+		"Logout": "Logout Successfully, Have a nice day!"
+	},
+	"RolePermission": {
+		"RolePermission": "Role Permission",
+		"RolePermissions": "Role Permissions"
+	},
+	"Role": {
+		"Role": "Role",
+		"Roles": "Roles"
+	},
+	"PageContent": {
+		"PageContent": "Page Content",
+		"PageContents": "Page Contents"
+	},
+	"Language": {
+		"Language": "Language",
+		"Languages": "Languages"
+	},
+	"User": {
+		"User": "User",
+		"Users": "Users"
+	},
+	"State": {
+		"State": "State ",
+		"States": "States"
+	},
+	"AppVersion": {
+		"AppVersion": "App Version",
+		"AppVersions": "App Versions"
+	},
+	"City": {
+		"City": "City",
+		"Cities": "Cities"
+	},
+	"Country": {
+		"Country": "Country",
+		"Countries": "Countries"
+	},
+	"SystemSetting": {
+		"SystemSetting": "System Setting",
+		"SystemSettings": "System Settings"
+	},
+	"DeviceToken": {
+		"DeviceToken": "Device Token"
+	},
+	"RoleModule": {
+		"RoleModule": "Role Module",
+		"RoleModules": "Role Modules"
+	},
+	"Student": {
+		"Student": "Student",
+		"Students": "Students"
+	},
+	"Faq": {
+		"Faq": "Faq",
+		"Faqs": "Faqs"
+	},
+	
+	"Video": {
+		"Video": "Video",
+		"Videos": "Videos"
+	},
+	"Link": {
+		"Link": "Link",
+		"Links": "Links"
+	}
+}

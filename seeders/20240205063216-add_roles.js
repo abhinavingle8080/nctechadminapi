@@ -19,9 +19,9 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date(),
     },{
-      role: 'Employee',
-      label: 'Employee',
-      description : "This is Employee",
+      role: 'Student',
+      label: 'Student',
+      description : "This is Student",
       created_at: new Date(),
       updated_at: new Date(),
     }])

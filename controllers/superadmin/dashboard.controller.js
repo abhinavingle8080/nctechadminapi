@@ -59,7 +59,7 @@ const dashboard = async (req, res) => {
     });
 
     const usersWithAge = recentBirthdays.rows.map((user) => {
-      const userWithAge = { ...user.dataValues }; // Create a shallow copy of the dataValues object
+      const userWithAge = { ...user.dataValues };
     
       if (typeof user.dataValues.date_of_birth === 'string') {
         userWithAge.date_of_birth = moment(user.dataValues.date_of_birth, 'YYYY-MM-DD').toDate();
