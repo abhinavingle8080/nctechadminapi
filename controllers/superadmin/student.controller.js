@@ -10,9 +10,7 @@ const helper = require("../../helpers/fileupload.helper");
 // Get all students with pagination and search
 const getAllStudents = async (req, res) => {
   try {
-    const { page = 1, limit = 10, search = "" } = req.query;
-    const offset = (parseInt(page) - 1) * parseInt(limit);
-
+    const body = req.body;
     const students = await Student.findAndCountAll({
       attributes: [
         "id",
@@ -43,18 +41,29 @@ const getAllStudents = async (req, res) => {
           attributes: ["id", "course_name"],
         },
       ],
-      offset: offset,
-      limit: parseInt(limit),
-      order: [["id", "ASC"]],
+      offset: (parseInt(body.page) - 1) * parseInt(body.limit),
+      limit: parseInt(body.limit),
+      order: [["id", "DESC"]],
       where: {
         [Op.or]: [
-          { first_name: { [Op.like]: `%${search}%` } },
-          { last_name: { [Op.like]: `%${search}%` } },
-          { email: { [Op.like]: `%${search}%` } },
+          {
+            first_name: {
+              [Op.like]: `%${body.search}%`,
+            },
+          },
+          {
+            last_name: {
+              [Op.like]: `%${body.search}%`,
+            },
+          },
+          {
+            email: {
+              [Op.like]: `%${body.search}%`,
+            },
+          },
         ],
       },
     });
-
     res.status(constants.STATUS_CODES.SUCCESS).json({
       statusCode: constants.STATUS_CODES.SUCCESS,
       message: "Students retrieved successfully",
